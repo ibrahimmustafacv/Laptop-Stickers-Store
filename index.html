@@ -886,6 +886,68 @@
             color: var(--primary);
         }
 
+        /* ───────── LIGHTBOX (للهواتف فقط) ───────── */
+        .exp-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(0, 0, 0, 0.93);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .exp-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .exp-lightbox-img {
+            max-width: 95%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 16px;
+            transform: scale(0.92);
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .exp-lightbox.active .exp-lightbox-img {
+            transform: scale(1);
+        }
+
+        .exp-lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 35px;
+            font-size: 44px;
+            font-weight: 300;
+            color: #fff;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s ease, color 0.3s ease;
+            line-height: 1;
+            background: rgba(255, 255, 255, 0.08);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .exp-lightbox-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
         /* ───────── MODAL ───────── */
         .modal-overlay {
             display: none;
@@ -1298,7 +1360,7 @@
                 max-width: 380px;
             }
 
-            /* ─── الشريط المتحرك (Sticker Strip) بحجم الـ PC ─── */
+            /* ─── الشريط المتحرك ─── */
             #sticker-strip {
                 padding: 16px 0;
             }
@@ -1307,10 +1369,10 @@
                 animation-duration: 40s;
             }
             .strip-track img {
-                height: 120px !important; /* نفس حجم الـ PC */
+                height: 120px !important;
             }
 
-            /* ─── قسم تجارب العملاء (Real Experiences) ─── */
+            /* ─── قسم تجارب العملاء ─── */
             #experience {
                 padding: 60px 16px 40px;
             }
@@ -1318,7 +1380,6 @@
                 margin-bottom: 40px;
             }
 
-            /* شبكة منظمة 2x2 مع تكبير الصور */
             .experience-grid {
                 display: grid !important;
                 grid-template-columns: 1fr 1fr !important;
@@ -1326,14 +1387,13 @@
                 gap: 16px !important;
                 min-height: auto !important;
             }
-            /* إعادة ضبط مواقع العناصر */
             .exp-item:nth-child(1),
             .exp-item:nth-child(2),
             .exp-item:nth-child(3),
             .exp-item:nth-child(4) {
                 grid-row: auto !important;
                 grid-column: auto !important;
-                aspect-ratio: 1 / 1 !important; /* مربع لتكبير الصورة */
+                aspect-ratio: 1 / 1 !important;
                 width: 100% !important;
                 max-height: none !important;
                 border-radius: 14px;
@@ -1342,6 +1402,19 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+            }
+
+            /* ─── Lightbox زر الإغلاق أصغر قليلاً ─── */
+            .exp-lightbox-close {
+                top: 20px;
+                right: 20px;
+                width: 48px;
+                height: 48px;
+                font-size: 36px;
+            }
+            .exp-lightbox-img {
+                max-width: 98%;
+                max-height: 85%;
             }
 
             /* باقي الأقسام */
@@ -1440,7 +1513,6 @@
                 font-size: 15px;
             }
 
-            /* الشريط المتحرك يظل بحجم الـ PC مع تحسين بسيط */
             .strip-track img {
                 height: 110px !important;
             }
@@ -1463,6 +1535,14 @@
             .exp-item:nth-child(3),
             .exp-item:nth-child(4) {
                 aspect-ratio: 1 / 1 !important;
+            }
+
+            .exp-lightbox-close {
+                top: 16px;
+                right: 16px;
+                width: 42px;
+                height: 42px;
+                font-size: 30px;
             }
 
             .modal-box {
@@ -1541,7 +1621,6 @@
             .hero-text p {
                 font-size: 15px;
             }
-            /* الشريط يبقى كبير لكن بتعديل بسيط */
             .strip-track img {
                 height: 100px !important;
             }
@@ -1565,6 +1644,13 @@
             .exp-item:nth-child(3),
             .exp-item:nth-child(4) {
                 aspect-ratio: 1 / 1 !important;
+            }
+            .exp-lightbox-close {
+                top: 12px;
+                right: 12px;
+                width: 36px;
+                height: 36px;
+                font-size: 24px;
             }
         }
 
@@ -1894,6 +1980,12 @@
         </div>
     </div>
 
+    <!-- ─── LIGHTBOX (للهواتف فقط) ─── -->
+    <div class="exp-lightbox" id="expLightbox">
+        <span class="exp-lightbox-close" id="expLightboxClose">✕</span>
+        <img class="exp-lightbox-img" id="expLightboxImg" src="" alt="Experience" />
+    </div>
+
     <!-- ─── FOOTER ─── -->
     <footer>
         <div class="footer-grid">
@@ -2141,6 +2233,52 @@
                 }
             });
 
+            // ─── LIGHTBOX (للهواتف فقط) ───
+            const lightbox = document.getElementById('expLightbox');
+            const lightboxImg = document.getElementById('expLightboxImg');
+            const lightboxClose = document.getElementById('expLightboxClose');
+
+            function openLightbox(src) {
+                if (window.innerWidth > 768) return; // تعمل فقط على الهواتف
+                lightboxImg.src = src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (lightboxClose) {
+                lightboxClose.addEventListener('click', closeLightbox);
+            }
+
+            if (lightbox) {
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === lightbox) {
+                        closeLightbox();
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+
+            // ربط النقر على صور التجارب
+            document.querySelectorAll('.exp-item').forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    // منع التنفيذ إذا كان الضغط على الزر أو أي عنصر داخلي آخر (احتياطي)
+                    const img = this.querySelector('img');
+                    if (img && img.src) {
+                        openLightbox(img.src);
+                    }
+                });
+            });
+
             // ─── ORDER TABS ───
             const tabs = document.querySelectorAll('.order-tab');
             const forms = {
@@ -2362,7 +2500,7 @@
                 });
             });
 
-            console.log('✦ STICKERVERSE — Fully responsive with mobile optimizations ✦');
+            console.log('✦ STICKERVERSE — Fully responsive with mobile lightbox ✦');
         })();
     </script>
 
