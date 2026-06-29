@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>STICKERVERSE — Premium Laptop Stickers</title>
+
+    <!-- ─── FAVICON ─── -->
+    <link rel="icon" href="logo/favicon.png" type="image/png" />
+
     <style>
         /* ───────── RESET & BASE ───────── */
         * {
@@ -886,7 +890,7 @@
             color: var(--primary);
         }
 
-        /* ───────── LIGHTBOX (للهواتف فقط) ───────── */
+        /* ───────── LIGHTBOX ───────── */
         .exp-lightbox {
             display: none;
             position: fixed;
@@ -1404,7 +1408,7 @@
                 object-fit: cover;
             }
 
-            /* ─── Lightbox زر الإغلاق أصغر قليلاً ─── */
+            /* ─── Lightbox ─── */
             .exp-lightbox-close {
                 top: 20px;
                 right: 20px;
@@ -1415,6 +1419,32 @@
             .exp-lightbox-img {
                 max-width: 98%;
                 max-height: 85%;
+            }
+
+            /* ─── FOOTER (تعديل الهواتف ليكون مثل الـ PC) ─── */
+            .footer-grid {
+                grid-template-columns: 1.2fr 1fr 1fr 1fr !important;
+                gap: 16px !important;
+                text-align: left !important;
+            }
+            .footer-brand .logo {
+                font-size: 22px;
+            }
+            .footer-brand p {
+                font-size: 13px;
+                max-width: 100%;
+            }
+            .footer-col h4 {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+            .footer-col ul li a {
+                font-size: 12px;
+            }
+            .footer-social a {
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
             }
 
             /* باقي الأقسام */
@@ -1482,10 +1512,6 @@
             .page-item {
                 aspect-ratio: 3/4;
             }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 24px;
-            }
             .footer-bottom {
                 flex-direction: column;
                 text-align: center;
@@ -1545,6 +1571,34 @@
                 font-size: 30px;
             }
 
+            /* ─── FOOTER (يظل 4 أعمدة) ─── */
+            .footer-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr !important;
+                gap: 12px !important;
+                text-align: left !important;
+            }
+            .footer-brand .logo {
+                font-size: 18px;
+            }
+            .footer-brand p {
+                font-size: 11px;
+            }
+            .footer-col h4 {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+            .footer-col ul li a {
+                font-size: 10px;
+            }
+            .footer-social a {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+            .footer-social {
+                gap: 6px;
+            }
+
             .modal-box {
                 padding: 20px 14px;
             }
@@ -1559,25 +1613,16 @@
             .page-item {
                 aspect-ratio: 3/4;
             }
-            .footer-grid {
-                grid-template-columns: 1fr;
+            .footer-bottom {
+                flex-direction: column;
                 text-align: center;
-                gap: 24px;
             }
-            .footer-brand .logo {
-                display: inline-block;
-            }
-            .footer-brand p {
-                margin: 0 auto;
-            }
-            .footer-social {
+            .footer-bottom .legal {
+                flex-wrap: wrap;
                 justify-content: center;
             }
-            .footer-col ul {
-                align-items: center;
-            }
-            .footer-col ul li a:hover {
-                transform: translateX(0);
+            footer {
+                padding: 30px 16px 16px;
             }
             .order-cta-container {
                 padding: 30px 16px;
@@ -1651,6 +1696,28 @@
                 width: 36px;
                 height: 36px;
                 font-size: 24px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr !important;
+                gap: 8px !important;
+            }
+            .footer-brand .logo {
+                font-size: 14px;
+            }
+            .footer-brand p {
+                font-size: 9px;
+            }
+            .footer-col h4 {
+                font-size: 10px;
+                margin-bottom: 6px;
+            }
+            .footer-col ul li a {
+                font-size: 9px;
+            }
+            .footer-social a {
+                width: 22px;
+                height: 22px;
+                font-size: 10px;
             }
         }
 
@@ -1980,7 +2047,7 @@
         </div>
     </div>
 
-    <!-- ─── LIGHTBOX (للهواتف فقط) ─── -->
+    <!-- ─── LIGHTBOX ─── -->
     <div class="exp-lightbox" id="expLightbox">
         <span class="exp-lightbox-close" id="expLightboxClose">✕</span>
         <img class="exp-lightbox-img" id="expLightboxImg" src="" alt="Experience" />
@@ -2233,13 +2300,13 @@
                 }
             });
 
-            // ─── LIGHTBOX (للهواتف فقط) ───
+            // ─── LIGHTBOX ───
             const lightbox = document.getElementById('expLightbox');
             const lightboxImg = document.getElementById('expLightboxImg');
             const lightboxClose = document.getElementById('expLightboxClose');
 
             function openLightbox(src) {
-                if (window.innerWidth > 768) return; // تعمل فقط على الهواتف
+                if (window.innerWidth > 768) return;
                 lightboxImg.src = src;
                 lightbox.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -2268,10 +2335,8 @@
                 }
             });
 
-            // ربط النقر على صور التجارب
             document.querySelectorAll('.exp-item').forEach(function(item) {
                 item.addEventListener('click', function(e) {
-                    // منع التنفيذ إذا كان الضغط على الزر أو أي عنصر داخلي آخر (احتياطي)
                     const img = this.querySelector('img');
                     if (img && img.src) {
                         openLightbox(img.src);
@@ -2500,7 +2565,7 @@
                 });
             });
 
-            console.log('✦ STICKERVERSE — Fully responsive with mobile lightbox ✦');
+            console.log('✦ STICKERVERSE — Fully responsive with favicon & horizontal mobile footer ✦');
         })();
     </script>
 
